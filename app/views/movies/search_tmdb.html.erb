@@ -11,7 +11,12 @@
   
   <%= label_tag :release_year, 'Release Year' %>
   <%= text_field_tag 'release_year', nil, class: "form-control", id: "movie_year_field", placeholder: "1986" %>
-  
+  <% flash.each do |key, value| %>
+  <div class="alert alert-<%= key %> alert-dismissible fade show" role="alert">
+    <%= value %>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+<% end %>
   <div class="form-check">
     <%= radio_button_tag 'language', 'en', false, class: "form-check-input" %>
     <%= label_tag 'language_en', 'English Only', class: "form-check-label" %>
