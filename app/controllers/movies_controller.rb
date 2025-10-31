@@ -21,7 +21,7 @@ class MoviesController < ApplicationController
     # default: render 'new' template
   end
   def search_tmdb
-   # later
+   # part 2
   end
   def create
     @movie = Movie.create!(movie_params)
