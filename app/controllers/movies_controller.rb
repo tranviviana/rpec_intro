@@ -20,7 +20,9 @@ class MoviesController < ApplicationController
   def new
     # default: render 'new' template
   end
-
+  def search_tmdb
+   # later
+  end
   def create
     @movie = Movie.create!(movie_params)
     flash[:notice] = "#{@movie.title} was successfully created."
