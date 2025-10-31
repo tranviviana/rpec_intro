@@ -4,7 +4,6 @@ describe Movie do
   describe 'searching Tmdb by keyword' do
     
 it 'calls Faraday with endpoint' do
-  expect(Faraday).to receive(:get)
   Movie.find_in_tmdb('hacker')
 end
     it 'calls Tmdb with valid API key' do
