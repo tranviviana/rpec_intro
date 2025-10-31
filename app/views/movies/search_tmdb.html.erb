@@ -4,7 +4,12 @@
 
 <h2>Search in TMDb</h2>
 <%# Part 5 here %>
-
+<% flash.each do |key, value| %>
+  <div class="alert alert-<%= key %> alert-dismissible fade show" role="alert">
+    <%= value %>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+<% end %>
 <%= form_tag search_tmdb_path, method: :post, id: 'tmdb_form' do %>
   <%= label_tag :title, 'Movie Name' %>
   <%= text_field_tag 'title', nil, class: "form-control", id: "movie_title_field", placeholder: "Manhunter" %>
@@ -28,6 +33,37 @@
   </div>
   
   <%= submit_tag 'Search', id: 'tmdb_submit', class: 'btn btn-warning col-2' %>
+  <%= link_to 'Back to movie list', movies_path, class: 'btn btn-primary' %>
 <% end %>
+ <table class="table table-striped table-hover">
+  <thead>
+    <tr>
+      <th>Movie Title</th>
+      <th>Rating</th>
+      <th>Release Date</th>
+      <th>Synopsis</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% if @movies_from_tmdb && @movies_from_tmdb.any? %>
+      <tr>
+        <<td><%= movie['title'] %></td>
+      <td><%= movie['release_date'] %></td>
+      <td><%= movie['vote_average'] %></td>
+      <td><%= truncate(movie['description'], length: 100) %></td>
+        <td>
+          <%= form_tag add_movie_path, method: :post do %>
+            <%= hidden_field_tag :title, movie['title'] %>
+            <%= hidden_field_tag :release_date, movie['release_date'] %>
+            <%= hidden_field_tag :rating, 'G' %>
+            <%= hidden_field_tag :synopsis, movie['description'] %>
+            <%= submit_tag 'Add', class: 'btn btn-success btn-sm' %>
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
 
-<%= link_to 'Back to movie list', movies_path, class: 'btn btn-primary' %>
+

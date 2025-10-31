@@ -6,7 +6,23 @@ class MoviesController < ApplicationController
     @movie = Movie.find(id) # look up movie by unique ID
     # will render app/views/movies/show.<extension> by default
   end
-
+  def add_movie
+    required_fields = [:title, :release_date, :rating]
+    
+    if required_fields.any? { |field| params[field].blank? }
+      flash[:warning] = 'Please fill in all required fields!'
+      redirect_to search_tmdb_path
+      return
+    end 
+    @movie = Movie.create!(
+      title: params[:title],
+      release_date: params[:release_date],
+      rating: params[:rating],
+      description: params[:description]
+    )   
+    flash[:notice] = '#{@movie.title} was successfully added to RottenPottatoes.'
+    redirect_to search_tmdb_path
+  end
   def index
     @all_ratings = Movie.all_ratings
     @movies = Movie.with_ratings(ratings_list, sort_by)
